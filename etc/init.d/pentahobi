@@ -22,6 +22,7 @@
 # Check that networking is up.
 [ "${NETWORKING}" = "no" ] && exit 0
 
+SU=/bin/su
 
 #set environment variables
 NAME=pentahobi
@@ -30,16 +31,13 @@ PENTAHOBI_USR=pentaho
 PENTAHOBI_GRP=pentaho
 export PENTAHO_JAVA_HOME=/usr/lib/jvm/java-1.6.0-sun.x86_64
 
-SU=/bin/su
 
 start() {
-    action $"Starting Pentaho Business Intelligence server" $SU -m $PENTAHOBI_USR -c $PENTAHOBI_HOME/start-pentaho.sh \
-        & | tee $PENTAHOBI_HOME/tomcat/logs/${NAME}-startup.log
+    action $"Starting Pentaho Business Intelligence server" $SU -m $PENTAHOBI_USR -c $PENTAHOBI_HOME/start-pentaho.sh 
 }
 
 stop() {
-    action $"Starting Pentaho Business Intelligence server" $SU -m $PENTAHOBI_USR -c $PENTAHOBI_HOME/start-pentaho.sh \
-        & | tee $PENTAHOBI_HOME/tomcat/logs/${NAME}-startup.log
+    action $"Stopping Pentaho Business Intelligence server" $SU -m $PENTAHOBI_USR -c $PENTAHOBI_HOME/stop-pentaho.sh 
 }
 
 case "$1" in
@@ -55,7 +53,7 @@ case "$1" in
         start
         ;;
     *)
-        echo $"Usage: $0 {start|stop|status|restart}"
+        echo $"Usage: $0 {start|stop|restart}"
         exit 1
 esac
 
