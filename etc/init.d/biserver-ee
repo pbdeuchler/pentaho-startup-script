@@ -1,6 +1,6 @@
 #! /bin/bash
 # biserver-ee   Bring up/down Pentaho Business Intelligence server
-# chkconfig: - 85 10
+# chkconfig: 345 85 10
 # description: Pentaho Business Intelligence server start at boot time.
 #
 #

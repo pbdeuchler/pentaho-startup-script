@@ -1,6 +1,6 @@
 #! /bin/bash
 # pdi-ee   Bring up/down Pentaho Data Integration server
-# chkconfig: - 85 10
+# chkconfig: 345 85 10
 # description: Pentaho Data Integration server start at boot time.
 #
 #
