@@ -1,11 +1,11 @@
 #! /bin/bash
-# biserver   Bring up/down Pentaho Business Intelligence server
+# biserver-ee   Bring up/down Pentaho Business Intelligence server
 # chkconfig: - 85 10
 # description: Pentaho Business Intelligence server start at boot time.
 #
 #
 ### BEGIN INIT INFO
-# Provides: biserver
+# Provides: biserver-ee
 # Required-Start $network $syslog $mysqld
 # Required-Stop $network $syslog
 # Default-Start:
@@ -25,7 +25,7 @@
 SU=/bin/su
 
 #set environment variables
-NAME=biserver
+NAME=biserver-ee
 FULLNAME="Pentaho Business Intelligence"
 PENTAHOBI_HOME=/opt/pentaho/biserver-ee
 PENTAHOBI_USR=pentaho
@@ -35,7 +35,7 @@ export PENTAHO_JAVA_HOME=/usr/lib/jvm/java-1.6.0-sun.x86_64
 
 getpid() {
     # ps from rhel leaves a space as the first column so we must use the second field in cut
-    PID=$(ps ax | grep $NAME | grep -v grep | cut -d" " -f2)
+    PID=$(ps ax | grep $NAME | grep java | grep -v grep | cut -d" " -f2)
     echo $PID
 }
 
@@ -91,7 +91,7 @@ case "$1" in
         restart
         ;;
     *)
-        echo $"Usage: $0 {start|stop|restart}"
+        echo $"Usage: $0 {start|stop|status|restart}"
         exit 1
 esac
 
