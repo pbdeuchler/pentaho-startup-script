@@ -34,8 +34,7 @@ export PENTAHO_JAVA_HOME=/usr/lib/jvm/java-1.6.0-sun.x86_64
 
 
 getpid() {
-    # ps from rhel leaves a space as the first column so we must use the second field in cut
-    PID=$(ps ax | grep $NAME | grep java | grep -v grep | cut -d" " -f2)
+    PID=$(ps ax | grep $NAME | grep java | grep -v grep | cut -d" " -f1)
     echo $PID
 }
 
