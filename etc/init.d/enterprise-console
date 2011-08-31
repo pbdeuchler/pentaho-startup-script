@@ -1,17 +1,17 @@
 #! /bin/bash
-# biserver-ee   Bring up/down Pentaho Business Intelligence server
+# enterprise-console   Bring up/down Pentaho Enterprise Console
 # chkconfig: 345 85 10
-# description: Pentaho Business Intelligence server start at boot time.
+# description: Pentaho Enterprise Console start at boot time.
 #
 #
 ### BEGIN INIT INFO
-# Provides: biserver-ee
+# Provides: enterprise-console
 # Required-Start $network $syslog $mysqld
 # Required-Stop $network $syslog
 # Default-Start:
 # Default-Stop:
-# Description: Pentaho Business Intelligence server start at boot time.
-# Short-Description: start and stop biserver
+# Description: Pentaho Enterprise Console start at boot time.
+# Short-Description: start and stop enterprise console
 ### END INIT INFO 
 
 # Source function library.
@@ -25,13 +25,12 @@
 SU=/bin/su
 
 #set environment variables
-NAME=biserver-ee
-FULLNAME="Pentaho Business Intelligence"
-PENTAHOBI_HOME=/opt/pentaho/biserver-ee
-PENTAHOBI_USR=pentaho
-PENTAHOBI_GRP=pentaho
+NAME=enterprise-console
+FULLNAME="Pentaho Enterprise Console"
+PENTAHOPEC_HOME=/opt/pentaho/enterprise-console
+PENTAHOPEC_USR=pentaho
+PENTAHOPEC_GRP=pentaho
 export PENTAHO_JAVA_HOME=/usr/lib/jvm/java-1.6.0-sun.x86_64
-
 
 getpid() {
     PID=$(ps ax | grep $NAME | grep java | grep -v grep | cut -d" " -f1)
@@ -40,17 +39,17 @@ getpid() {
 
 start() {
     if [ $(getpid)"x" == "x" ]; then
-        action $"Starting Pentaho Business Intelligence server" $SU -m $PENTAHOBI_USR -c "$PENTAHOBI_HOME/start-pentaho.sh >> $PENTAHOBI_HOME/tomcat/logs/startup.log"
+        action $"Starting Pentaho Enterprise Console" $SU -m $PENTAHOPEC_USR -c "nohup $PENTAHOPEC_HOME/start-pec.sh >> $PENTAHOPEC_HOME/startup.log &"
     else
-        action $"Starting Pentaho Business Intelligence server" /bin/false
+        action $"Starting Pentaho Enterprise Console" /bin/false
     fi
 }
 
 stop() {
     if [ $(getpid)"x" != "x" ]; then
-        action $"Stopping Pentaho Business Intelligence server" $SU -m $PENTAHOBI_USR -c "$PENTAHOBI_HOME/stop-pentaho.sh >> $PENTAHOBI_HOME/tomcat/logs/startup.log"
+        action $"Stopping Pentaho Enterprise Console" $SU -m $PENTAHOPEC_USR -c "nohup $PENTAHOPEC_HOME/stop-pec.sh >> $PENTAHOPEC_HOME/startup.log &"
     else
-        action $"Stopping Pentaho Business Intelligence server" /bin/false
+        action $"Stopping Pentaho Enterprise Console" /bin/false
     fi
 }
 

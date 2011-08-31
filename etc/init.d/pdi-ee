@@ -11,7 +11,7 @@
 # Default-Start:
 # Default-Stop:
 # Description: Pentaho Data Integration server start at boot time.
-# Short-Description: start and stop biserver
+# Short-Description: start and stop pdi-ee
 ### END INIT INFO 
 
 # Source function library.
@@ -40,7 +40,7 @@ getpid() {
 
 start() {
     if [ $(getpid)"x" == "x" ]; then
-        action $"Starting Pentaho Data Integration server" $SU -m $PENTAHOPDI_USR -c $PENTAHOPDI_HOME/start-pentaho.sh 
+        action $"Starting Pentaho Data Integration server" $SU -m $PENTAHOPDI_USR -c "$PENTAHOPDI_HOME/start-pentaho.sh >> $PENTAHOPDI_HOME/tomcat/logs/startup.log"
     else
         action $"Starting Pentaho Data Integration server" /bin/false
     fi
@@ -48,7 +48,8 @@ start() {
 
 stop() {
     if [ $(getpid)"x" != "x" ]; then
-        action $"Stopping Pentaho Data Integration server" $SU -m $PENTAHOPDI_USR -c $PENTAHOPDI_HOME/stop-pentaho.sh 
+        action $"Stopping Pentaho Data Integration server" $SU -m $PENTAHOPDI_USR -c "$PENTAHOPDI_HOME/stop-pentaho.sh >> $PENTAHOPDI_HOME/tomcat/logs/startup.log"
+
     else
         action $"Stopping Pentaho Data Integration server" /bin/false
     fi
