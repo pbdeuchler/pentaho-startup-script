@@ -33,13 +33,15 @@ PENTAHOPEC_GRP=pentaho
 export PENTAHO_JAVA_HOME=/usr/lib/jvm/java-1.6.0-sun.x86_64
 
 getpid() {
-    PID=$(ps ax | grep $NAME | grep java | grep -v grep | cut -d" " -f1)
+    PID=$(ps ax | grep $NAME | grep java | grep -v grep | awk '{print $1}' )
     echo $PID
 }
 
 start() {
     if [ $(getpid)"x" == "x" ]; then
+        pushd $PENTAHOPEC_HOME > /dev/null
         action $"Starting Pentaho Enterprise Console" $SU -m $PENTAHOPEC_USR -c "nohup $PENTAHOPEC_HOME/start-pec.sh >> $PENTAHOPEC_HOME/startup.log &"
+        popd $PENTAHOPEC_HOME > /dev/null
     else
         action $"Starting Pentaho Enterprise Console" /bin/false
     fi
@@ -47,7 +49,9 @@ start() {
 
 stop() {
     if [ $(getpid)"x" != "x" ]; then
+        pushd $PENTAHOPEC_HOME > /dev/null
         action $"Stopping Pentaho Enterprise Console" $SU -m $PENTAHOPEC_USR -c "nohup $PENTAHOPEC_HOME/stop-pec.sh >> $PENTAHOPEC_HOME/startup.log &"
+        popd $PENTAHOPEC_HOME > /dev/null
     else
         action $"Stopping Pentaho Enterprise Console" /bin/false
     fi

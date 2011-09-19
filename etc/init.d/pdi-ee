@@ -34,13 +34,15 @@ export PENTAHO_JAVA_HOME=/usr/lib/jvm/java-1.6.0-sun.x86_64
 
 
 getpid() {
-    PID=$(ps ax | grep $NAME | grep java | grep -v grep | cut -d" " -f1)
+    PID=$(ps ax | grep $NAME | grep java | grep -v grep | awk '{print $1}' )
     echo $PID
 }
 
 start() {
     if [ $(getpid)"x" == "x" ]; then
+        pushd $PENTAHOPDI_HOME > /dev/null
         action $"Starting Pentaho Data Integration server" $SU -m $PENTAHOPDI_USR -c "$PENTAHOPDI_HOME/start-pentaho.sh >> $PENTAHOPDI_HOME/tomcat/logs/startup.log"
+        popd $PENTAHOPDI_HOME > /dev/null
     else
         action $"Starting Pentaho Data Integration server" /bin/false
     fi
@@ -48,8 +50,9 @@ start() {
 
 stop() {
     if [ $(getpid)"x" != "x" ]; then
+        pushd $PENTAHOPDI_HOME > /dev/null
         action $"Stopping Pentaho Data Integration server" $SU -m $PENTAHOPDI_USR -c "$PENTAHOPDI_HOME/stop-pentaho.sh >> $PENTAHOPDI_HOME/tomcat/logs/startup.log"
-
+        popd $PENTAHOPDI_HOME > /dev/null
     else
         action $"Stopping Pentaho Data Integration server" /bin/false
     fi
