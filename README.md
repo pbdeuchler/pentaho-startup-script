@@ -1,18 +1,20 @@
-Startup scripts for pentaho BI and Data Integration
-===================================================
+Startup scripts for pentaho BI, Data Integration and the Enterprise Console
+===========================================================================
 
 These are scripts to start the enterprise version of 
 
 * Pentaho Business Intelligence
 * Pentaho Data Integration
+* Pentaho Enterprise Console
 
 Both scripts assume you defined a top directory for all the pentaho installations as in:
 
     /opt/pentaho
            /pdi-ee
            /biserver-ee
-
-The scripts also assume you are running tomcat (pentaho) as an unprivileged (PENTAHOBI_USR and PENTAHOPDI_USR) and that the directories are owned by that user.
+           /enterprise-console
+           
+The scripts also assume you are running tomcat (pentaho) as an unprivileged user (PENTAHOBI_USR, PENTAHOPDI_USR and PENTAHOPEC_USR) and that the directories are owned by that user.
 
 The scripts are pretty self explanatory and the behaviour and location of the installation is fairly easy to change as well as the location of the Java installation
 
@@ -25,7 +27,8 @@ Once you copied the /etc/init.d/biserver-ee and /etc/init.d/pdi-ee to your serve
 
     chkconfig --level 345 pdi-ee on
     chkconfig --level 345 biserver-ee on
-
+    chkconfig --level 345 enterprise-console on
+    
 Disclaimer:
 ===========
 
