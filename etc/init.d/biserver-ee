@@ -51,7 +51,8 @@ start() {
 stop() {
     if [ $(getpid)"x" != "x" ]; then
         pushd $PENTAHOBI_HOME > /dev/null
-        action $"Stopping Pentaho Business Intelligence server" $SU -m $PENTAHOBI_USR -c "$PENTAHOBI_HOME/stop-pentaho.sh >> $PENTAHOBI_HOME/tomcat/logs/startup.log"
+        CURRPID=$(getpid)
+        action $"Stopping Pentaho Business Intelligence server" $SU -m $PENTAHOBI_USR -c "kill -9 $CURRPID"
         popd $PENTAHOBI_HOME > /dev/null
     else
         action $"Stopping Pentaho Business Intelligence server" /bin/false

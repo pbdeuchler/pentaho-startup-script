@@ -50,7 +50,8 @@ start() {
 stop() {
     if [ $(getpid)"x" != "x" ]; then
         pushd $PENTAHOPEC_HOME > /dev/null
-        action $"Stopping Pentaho Enterprise Console" $SU -m $PENTAHOPEC_USR -c "nohup $PENTAHOPEC_HOME/stop-pec.sh >> $PENTAHOPEC_HOME/startup.log &"
+        CURRPID=$(getpid)
+        action $"Stopping Pentaho Enterprise Console" $SU -m $PENTAHOPEC_USR -c "kill -9 $CURRPID"
         popd $PENTAHOPEC_HOME > /dev/null
     else
         action $"Stopping Pentaho Enterprise Console" /bin/false
