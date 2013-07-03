@@ -25,16 +25,16 @@
 SU=/bin/su
 
 #set environment variables
-NAME=biserver-ee
+NAME=biserver
 FULLNAME="Pentaho Business Intelligence"
-PENTAHOBI_HOME=/opt/pentaho/biserver-ee
+PENTAHOBI_HOME=/opt/pentaho/biserver
 PENTAHOBI_USR=pentaho
 PENTAHOBI_GRP=pentaho
-export PENTAHO_JAVA_HOME=/usr/lib/jvm/java-1.6.0-sun.x86_64
+export PENTAHO_JAVA_HOME=/usr/lib/jvm/java-1.5.0-gcj-1.5.0.0
 
 
 getpid() {
-    PID=$(ps ax | grep $NAME | grep java | grep -v grep | awk '{print $1}' )
+    PID=$(ps aux | grep $NAME | grep java | grep -v grep | awk '{print $2}')
     echo $PID
 }
 
